@@ -1,0 +1,22 @@
+Start / setup (one-time)
+
+Open a Terminal and run these to ensure environment is ready:
+
+cd ~/Desktop/distributed_booking
+source venv/bin/activate
+# confirm files exist
+ls -la booking_pb2*.py nodes client llm node_node1.json node_node2.json node_node3.json
+
+
+Expected: you see booking_pb2.py, booking_pb2_grpc.py, nodes/, client/, llm/, and the three node_nodeX.json files (or they will be created when nodes first run).
+
+
+
+
+
+
+
+
+
+
+
