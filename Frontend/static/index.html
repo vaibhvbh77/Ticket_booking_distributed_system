@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Distributed Booking - Demo UI</title>
+  <style>
+    body{font-family:system-ui, -apple-system, sans-serif; padding:20px}
+    #seats { display: grid; grid-template-columns: repeat(5, 90px); gap:10px; margin-top:12px; }
+    .seat{ border:1px solid #ccc; padding:10px; text-align:center; border-radius:6px; }
+    .reserved{ background:#fdd; }
+    button{ margin-top:6px }
+  </style>
+</head>
+<body>
+  <h2>Ticket Booking (Demo)</h2>
+  <div>
+    Username: <input id="username" value="vaibhav"> 
+    Password: <input id="password" value="mysecret" type="password">
+    <button id="btnLogin">Login</button>
+    Token: <span id="tokenSpan"></span>
+  </div>
+
+  <div style="margin-top:14px">
+    <button id="btnRefresh">Refresh Seats</button>
+  </div>
+
+  <div id="seats"></div>
+
+<script>
+let token = "";
+document.getElementById('btnLogin').onclick = async () => {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const r = await fetch('/login', {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({username,password})});
+  const j = await r.json();
+  if (j.token) { token=j.token; document.getElementById('tokenSpan').innerText = token; alert('Logged in'); }
+  else alert('Login failed');
+}
+
+async function refresh() {
+  const r = await fetch('/get', {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({token})});
+  const j = await r.json();
+  const seatsDiv = document.getElementById('seats');
+  seatsDiv.innerHTML = '';
+  (j.seats || []).forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'seat' + (s.reserved ? ' reserved' : '');
+    div.innerHTML = `<strong>${s.seat_id}</strong><div>${s.reserved ? 'Reserved' : 'Free'}</div><div style="font-size:12px">${s.reserved ? 'by: '+s.reserved_by : ''}</div>`;
+    const btn = document.createElement('button');
+    btn.innerText = s.reserved ? 'Cancel' : 'Reserve';
+    btn.onclick = async () => {
+      if (!token) { alert('Please login'); return; }
+      const url = s.reserved ? '/cancel' : '/reserve';
+      const body = {token, seat_id: s.seat_id, client_id: document.getElementById('username').value};
+      const rr = await fetch(url, {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(body)});
+      const jj = await rr.json();
+      alert(JSON.stringify(jj));
+      await refresh();
+    };
+    div.appendChild(btn);
+    seatsDiv.appendChild(div);
+  });
+}
+
+document.getElementById('btnRefresh').onclick = refresh;
+window.onload = refresh;
+</script>
+</body>
+</html>

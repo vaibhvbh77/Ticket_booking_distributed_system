@@ -11,58 +11,16 @@
       "term": 0,
       "command": "reserve",
       "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 3,
-      "term": 0,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 4,
-      "term": 0,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 5,
-      "term": 0,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 6,
-      "term": 0,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 7,
-      "term": 0,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 8,
-      "term": 0,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 9,
-      "term": 0,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
     }
   ],
   "seats": {
     "S1": {
       "reserved": true,
-      "by": "test"
+      "by": "vaibhav"
     },
     "S2": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S3": {
       "reserved": false,
@@ -105,18 +63,6 @@
     "tok-0a7e4520": {
       "username": "vaibhav",
       "expiry": 1760894602.860584
-    },
-    "tok-cf006d79": {
-      "username": "vaibhav",
-      "expiry": 1760896362.0928829
-    },
-    "tok-5d37f4ee": {
-      "username": "vaibhav",
-      "expiry": 1760896418.1649039
-    },
-    "tok-3d0df5ef": {
-      "username": "vaibhav",
-      "expiry": 1760896666.95202
     }
   },
   "users": {
