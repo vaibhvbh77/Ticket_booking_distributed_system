@@ -1,13 +1,26 @@
 {
-  "log": [],
+  "log": [
+    {
+      "index": 1,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 2,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    }
+  ],
   "seats": {
     "S1": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S2": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S3": {
       "reserved": false,
@@ -42,7 +55,22 @@
       "by": ""
     }
   },
-  "sessions": {},
+  "sessions": {
+    "tok-34a6aafa": {
+      "username": "vaibhav",
+      "expiry": 1760889839.5980248
+    }
+  },
+  "users": {
+    "vaibhav": {
+      "salt": "ff22aca1db7c2c72",
+      "pw_hash": "918fe4424b15e07a6331ebe82f4e731cdb94052ef0fd335d859689c9dde62f16"
+    },
+    "test": {
+      "salt": "9e88322f30fb2b4a",
+      "pw_hash": "2cf5dcbeff6940c520ae75dc4f8f3746d7663436e2d9a6d1c3cd6c696f8f098c"
+    }
+  },
   "currentTerm": 0,
   "votedFor": null
 }

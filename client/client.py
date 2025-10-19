@@ -24,10 +24,18 @@ def interactive(addr):
             break
 
         if cmd[0] == "login":
-            name = cmd[1] if len(cmd) > 1 else "user"
-            r = stub.Login(booking_pb2.LoginRequest(username=name, password="x"))
-            token = r.token
-            print("Logged in, token:", token)
+            name = cmd[1] if len(cmd) > 1 else input("Username: ")
+            pw = input("Password: ")
+            try:
+                r = stub.Login(booking_pb2.LoginRequest(username=name, password=pw))
+                if getattr(r, "status", 1) != 0 or not getattr(r, "token", ""):
+                    print("Login failed")
+                else:
+                    token = r.token
+                    print("Logged in, token:", token)
+            except Exception as e:
+                print("Login RPC error:", e)
+                continue
 
         elif cmd[0] == "get":
             r = stub.GetSeats(booking_pb2.GetRequest(token=token))

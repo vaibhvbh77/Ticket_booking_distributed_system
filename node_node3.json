@@ -43,6 +43,12 @@
     }
   },
   "sessions": {},
+  "users": {
+    "vaibhav": {
+      "salt": "ff22aca1db7c2c72",
+      "pw_hash": "918fe4424b15e07a6331ebe82f4e731cdb94052ef0fd335d859689c9dde62f16"
+    }
+  },
   "currentTerm": 0,
   "votedFor": null
 }

@@ -1,16 +1,7 @@
-# nodes/node.py
-# Distributed ticket booking node (leader + followers) with basic auth and robust AppendEntries
 
-import time
-import json
-import threading
-import uuid
-import sys
+import time, json, threading, uuid, sys
 from concurrent import futures
 import grpc
-import hashlib
-import os
-
 import booking_pb2, booking_pb2_grpc
 
 
@@ -23,17 +14,14 @@ class Persist:
             self.log = data.get("log", [])
             self.seats = data.get("seats", {})
             self.sessions = data.get("sessions", {})   # store tokens
-            self.users = data.get("users", {})
             self.currentTerm = data.get("currentTerm", 0)
             self.votedFor = data.get("votedFor", None)
         except Exception:
             self.log = []
             self.seats = {f"S{n}": {"reserved": False, "by": ""} for n in range(1, 11)}
             self.sessions = {}
-            self.users = {}
             self.currentTerm = 0
             self.votedFor = None
-            # persist initial state
             self._persist()
 
     def append_log(self, entry):
@@ -55,12 +43,6 @@ class Persist:
             if self.seats[seat]["reserved"] and self.seats[seat]["by"] == client:
                 self.seats[seat]["reserved"] = False
                 self.seats[seat]["by"] = ""
-        elif cmd == "reset":
-            for s in self.seats.values():
-                s["reserved"] = False
-                s["by"] = ""
-            # also clear log if desired
-            self.log = []
         self._persist()
 
     def _persist(self):
@@ -69,27 +51,9 @@ class Persist:
                 "log": self.log,
                 "seats": self.seats,
                 "sessions": self.sessions,
-                "users": self.users,
                 "currentTerm": self.currentTerm,
                 "votedFor": self.votedFor
             }, f, indent=2)
-
-    # --- simple password helpers (sha256 + salt) for demo ---
-    def _hash_password(self, password, salt):
-        return hashlib.sha256((salt + password).encode('utf-8')).hexdigest()
-
-    def add_user(self, username, password_plain):
-        salt = os.urandom(8).hex()
-        pw_hash = self._hash_password(password_plain, salt)
-        self.users = getattr(self, "users", {})
-        self.users[username] = {"salt": salt, "pw_hash": pw_hash}
-        self._persist()
-
-    def verify_user(self, username, password_plain):
-        u = getattr(self, "users", {}).get(username)
-        if not u:
-            return False
-        return self._hash_password(password_plain, u["salt"]) == u["pw_hash"]
 
 
 class NodeServicer(booking_pb2_grpc.ClientAPIServicer, booking_pb2_grpc.RaftServicer):
@@ -99,17 +63,12 @@ class NodeServicer(booking_pb2_grpc.ClientAPIServicer, booking_pb2_grpc.RaftServ
         self.persist = Persist(f"node_{node_id}.json")
         self.lock = threading.Lock()
 
-        # rebuild from logs (apply in order)
+        # rebuild from logs
         for e in list(self.persist.log):
-            try:
-                self.persist.apply_log(e)
-            except Exception:
-                # ignore bad entries during startup
-                pass
+            self.persist.apply_log(e)
 
-        # lastApplied should reflect applied entries
         self.commitIndex = 0
-        self.lastApplied = len(self.persist.log)
+        self.lastApplied = 0
         self.leader_id = self.peers[0][0] if self.peers else self.node_id
 
     # --- Helpers ---
@@ -132,12 +91,8 @@ class NodeServicer(booking_pb2_grpc.ClientAPIServicer, booking_pb2_grpc.RaftServ
 
     # --- Client API ---
     def Login(self, request, context):
-        username = request.username or "guest"
-        password = getattr(request, "password", "") or ""
-        # verify credentials
-        if not self.persist.verify_user(username, password):
-            return booking_pb2.LoginResponse(status=1, token="")  # login failed
-        token = self._create_token(username)
+        user = request.username or "guest"
+        token = self._create_token(user)
         return booking_pb2.LoginResponse(status=0, token=token)
 
     def GetSeats(self, request, context):
@@ -192,16 +147,11 @@ class NodeServicer(booking_pb2_grpc.ClientAPIServicer, booking_pb2_grpc.RaftServ
                         entries=[le],
                         leaderCommit=entry["index"]
                     )
-                    # DEBUG: show attempt
-                    print(f"[DEBUG] trying AppendEntries -> {pid} @ {addr} (entry {entry['index']})")
-                    resp = stub.AppendEntries(args, timeout=3)
-                    if getattr(resp, "success", False):
+                    resp = stub.AppendEntries(args, timeout=2)
+                    if resp.success:
                         successes += 1
-                        print(f"[DEBUG] replicated to {pid} ({addr}) success (matchIndex={getattr(resp,'matchIndex',None)})")
-                    else:
-                        print(f"[DEBUG] replicate to {pid} ({addr}) returned success=False resp={resp}")
                 except Exception as e:
-                    print(f"[DEBUG] replicate error to {pid} ({addr}):", repr(e))
+                    print("replicate error", pid, e)
 
             if successes >= (len(self.peers) // 2) + 1:
                 self.commitIndex = entry["index"]
@@ -257,16 +207,11 @@ class NodeServicer(booking_pb2_grpc.ClientAPIServicer, booking_pb2_grpc.RaftServ
                         entries=[le],
                         leaderCommit=entry["index"]
                     )
-                    # DEBUG: show attempt
-                    print(f"[DEBUG] trying AppendEntries (cancel) -> {pid} @ {addr} (entry {entry['index']})")
-                    resp = stub.AppendEntries(args, timeout=3)
-                    if getattr(resp, "success", False):
+                    resp = stub.AppendEntries(args, timeout=2)
+                    if resp.success:
                         successes += 1
-                        print(f"[DEBUG] replicated cancel to {pid} ({addr}) success (matchIndex={getattr(resp,'matchIndex',None)})")
-                    else:
-                        print(f"[DEBUG] cancel replicate to {pid} ({addr}) returned success=False resp={resp}")
                 except Exception as e:
-                    print(f"[DEBUG] replicate error during cancel to {pid} ({addr}):", repr(e))
+                    print("replicate error during cancel", pid, e)
 
             if successes >= (len(self.peers) // 2) + 1:
                 self.commitIndex = entry["index"]
@@ -287,42 +232,14 @@ class NodeServicer(booking_pb2_grpc.ClientAPIServicer, booking_pb2_grpc.RaftServ
                 return booking_pb2.RequestVoteReply(term=self.persist.currentTerm, voteGranted=False)
 
     def AppendEntries(self, request, context):
-        """
-        Robust AppendEntries on follower:
-        - validate prevLogIndex: if follower doesn't have prevLogIndex, reject (success=False).
-        - only append entries that continue from len(self.persist.log)+1 (contiguous).
-        - apply up to leaderCommit.
-        """
         with self.lock:
-            # If leader's term is newer, update currentTerm (simple)
-            if request.term > self.persist.currentTerm:
-                self.persist.currentTerm = request.term
-                self.persist._persist()
-
-            local_len = len(self.persist.log)
-            # If prevLogIndex is greater than what we have, we can't append (we're missing earlier entries).
-            if request.prevLogIndex > local_len:
-                # return matchIndex = local_len to help leader decide
-                return booking_pb2.AppendEntriesReply(term=self.persist.currentTerm, success=False, matchIndex=local_len)
-
-            # Process entries ensuring contiguous indices
             for e in request.entries:
                 entry = {"index": e.index, "term": e.term, "command": e.command, "data": e.data}
-                expected_index = len(self.persist.log) + 1
-                if entry["index"] == expected_index:
+                if len(self.persist.log) < entry["index"]:
                     self.persist.append_log(entry)
-                elif entry["index"] <= len(self.persist.log):
-                    # already present, skip
-                    pass
-                else:
-                    # gap detected -> reject so leader can resend earlier entries
-                    return booking_pb2.AppendEntriesReply(term=self.persist.currentTerm, success=False, matchIndex=len(self.persist.log))
-
-            # apply up to leaderCommit
             while self.lastApplied < request.leaderCommit and self.lastApplied < len(self.persist.log):
                 self.persist.apply_log(self.persist.log[self.lastApplied])
                 self.lastApplied += 1
-
             return booking_pb2.AppendEntriesReply(term=self.persist.currentTerm, success=True, matchIndex=len(self.persist.log))
 
 
