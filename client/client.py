@@ -44,6 +44,30 @@ def interactive(addr):
             except Exception as e:
                 print("LLM call failed:", e)
 
+        elif cmd[0] == "cancel":
+            # usage: cancel S1
+            if len(cmd) < 2:
+                print("usage: cancel S1")
+                continue
+            seat = cmd[1].upper()
+            try:
+                r = stub.CancelSeat(booking_pb2.CancelRequest(token=token, seat_id=seat))
+                # If follower returns NOT_LEADER redirect pattern (Status with msg starting NOT_LEADER:)
+                msg = getattr(r, "msg", "")
+                code = getattr(r, "code", None)
+                if code == 1 and isinstance(msg, str) and msg.startswith("NOT_LEADER:"):
+                    leader = msg.split(":", 1)[1]
+                    print("Redirected to leader", leader)
+                    stub = make_stub(leader)
+                    r2 = stub.CancelSeat(booking_pb2.CancelRequest(token=token, seat_id=seat))
+                    print(f"Result: code={getattr(r2,'code',None)} msg={getattr(r2,'msg',None)}")
+                else:
+                    print(f"Result: code={code} msg={msg}")
+            except Exception as e:
+                print("Cancel failed:", e)        
+
+                
+
         elif cmd[0] == "reserve":
             if len(cmd) < 2:
                 print("usage: reserve S1")

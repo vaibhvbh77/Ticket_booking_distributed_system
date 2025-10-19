@@ -1,18 +1,5 @@
 {
-  "log": [
-    {
-      "index": 1,
-      "term": 0,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S5\", \"client_id\": \"cli-user\"}"
-    },
-    {
-      "index": 2,
-      "term": 0,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S9\", \"client_id\": \"c3\"}"
-    }
-  ],
+  "log": [],
   "seats": {
     "S1": {
       "reserved": false,
@@ -31,8 +18,8 @@
       "by": ""
     },
     "S5": {
-      "reserved": true,
-      "by": "cli-user"
+      "reserved": false,
+      "by": ""
     },
     "S6": {
       "reserved": false,
@@ -47,14 +34,15 @@
       "by": ""
     },
     "S9": {
-      "reserved": true,
-      "by": "c3"
+      "reserved": false,
+      "by": ""
     },
     "S10": {
       "reserved": false,
       "by": ""
     }
   },
+  "sessions": {},
   "currentTerm": 0,
   "votedFor": null
 }
