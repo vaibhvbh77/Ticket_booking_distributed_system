@@ -53,48 +53,252 @@
       "term": 0,
       "command": "cancel",
       "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 10,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 11,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 12,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 13,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 14,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 15,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 16,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 17,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 18,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 19,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 20,
+      "term": 0,
+      "command": "cancel",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 21,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 22,
+      "term": 0,
+      "command": "cancel",
+      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 23,
+      "term": 0,
+      "command": "cancel",
+      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 24,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 25,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 26,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 27,
+      "term": 0,
+      "command": "cancel",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 28,
+      "term": 0,
+      "command": "cancel",
+      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 29,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 30,
+      "term": 0,
+      "command": "cancel",
+      "data": "{\"seat_id\": \"S1\", \"client_id\": \"test\"}"
+    },
+    {
+      "index": 31,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 32,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S4\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 33,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S5\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 34,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S10\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 35,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S9\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 36,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S8\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 37,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S7\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 38,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S6\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 39,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 40,
+      "term": 0,
+      "command": "cancel",
+      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 41,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 42,
+      "term": 0,
+      "command": "cancel",
+      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 43,
+      "term": 0,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
     }
   ],
   "seats": {
     "S1": {
       "reserved": true,
-      "by": "test"
+      "by": "vaibhav"
     },
     "S2": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S3": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S4": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S5": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S6": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S7": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S8": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S9": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S10": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     }
   },
   "sessions": {
@@ -161,6 +365,74 @@
     "tok-3b23852a": {
       "username": "vaibhav",
       "expiry": 1760896967.254163
+    },
+    "tok-0ab51582": {
+      "username": "vaibhav",
+      "expiry": 1760948874.835079
+    },
+    "tok-5ddd3ed6": {
+      "username": "vaibhav",
+      "expiry": 1760949184.8049831
+    },
+    "tok-777f8046": {
+      "username": "vaibhav",
+      "expiry": 1760951220.081554
+    },
+    "tok-a68a3074": {
+      "username": "vaibhav",
+      "expiry": 1760951236.695829
+    },
+    "tok-74266a92": {
+      "username": "vaibhav",
+      "expiry": 1760952172.995714
+    },
+    "tok-c26bb3c9": {
+      "username": "vaibhav",
+      "expiry": 1760952182.05872
+    },
+    "tok-6e3494dc": {
+      "username": "vaibhav",
+      "expiry": 1760952236.0000472
+    },
+    "tok-0da22207": {
+      "username": "vaibhav",
+      "expiry": 1760952241.225562
+    },
+    "tok-14fbf438": {
+      "username": "vaibhav",
+      "expiry": 1760952248.475106
+    },
+    "tok-e134e5e3": {
+      "username": "vaibhav",
+      "expiry": 1760952303.831085
+    },
+    "tok-bb97ca5a": {
+      "username": "vaibhav",
+      "expiry": 1760953009.722166
+    },
+    "tok-27de9539": {
+      "username": "vaibhav",
+      "expiry": 1760953168.847842
+    },
+    "tok-e99f8077": {
+      "username": "vaibhav",
+      "expiry": 1760953259.1964722
+    },
+    "tok-9b9e7320": {
+      "username": "test",
+      "expiry": 1760953269.932051
+    },
+    "tok-2bf7328b": {
+      "username": "vaibhav",
+      "expiry": 1760953280.4162052
+    },
+    "tok-63e0955b": {
+      "username": "vaibhav",
+      "expiry": 1760953374.323919
+    },
+    "tok-ec743f8f": {
+      "username": "vaibhav",
+      "expiry": 1760953397.016726
     }
   },
   "users": {

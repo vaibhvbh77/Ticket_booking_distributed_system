@@ -4,7 +4,8 @@ import booking_pb2, booking_pb2_grpc
 import grpc
 import os
 
-app = Flask(__name__, static_folder="static")
+# static folder is frontend/static relative to this file
+app = Flask(__name__, static_folder="static", static_url_path="")
 
 LEADER_ADDR = os.environ.get("LEADER_ADDR", "127.0.0.1:60051")
 
@@ -13,10 +14,27 @@ def make_stub(addr=None):
     ch = grpc.insecure_channel(addr)
     return booking_pb2_grpc.ClientAPIStub(ch)
 
+# Serve root index
 @app.route("/")
 def index():
-    return send_from_directory("static", "index.html")
+    return send_from_directory(app.static_folder, "index.html")
 
+# Serve login page explicitly
+@app.route("/login.html")
+def login_page():
+    return send_from_directory(app.static_folder, "login.html")
+
+# Generic static file route so /index.html, /styles.css, etc. work
+@app.route("/<path:filename>")
+def static_files(filename):
+    # sanitize path
+    safe_path = os.path.normpath(filename)
+    # prevent escaping the static folder
+    if safe_path.startswith(".."):
+        return "Invalid path", 400
+    return send_from_directory(app.static_folder, safe_path)
+
+# ---- API endpoints (proxy to gRPC nodes) ----
 @app.route("/login", methods=["POST"])
 def login():
     data = request.json or {}
@@ -25,7 +43,7 @@ def login():
     try:
         stub = make_stub()
         resp = stub.Login(booking_pb2.LoginRequest(username=username, password=password), timeout=3)
-        return jsonify({"status": resp.status, "token": getattr(resp,"token","")})
+        return jsonify({"status": getattr(resp,"status",0), "token": getattr(resp,"token","")})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -37,7 +55,7 @@ def get_seats():
         stub = make_stub()
         resp = stub.GetSeats(booking_pb2.GetRequest(token=token), timeout=3)
         seats = [{"seat_id": s.seat_id, "reserved": s.reserved, "reserved_by": s.reserved_by} for s in resp.seats]
-        return jsonify({"status": resp.status, "seats": seats})
+        return jsonify({"status": getattr(resp,"status",0), "seats": seats})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -50,7 +68,7 @@ def reserve():
     try:
         stub = make_stub()
         resp = stub.ReserveSeat(booking_pb2.ReserveRequest(token=token, seat_id=seat, client_id=client_id), timeout=5)
-        return jsonify({"code": resp.code, "msg": resp.msg})
+        return jsonify({"code": getattr(resp,"code",None), "msg": getattr(resp,"msg",None)})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -62,7 +80,6 @@ def cancel():
     try:
         stub = make_stub()
         resp = stub.CancelSeat(booking_pb2.CancelRequest(token=token, seat_id=seat), timeout=5)
-        # Status message fields may be code/msg
         return jsonify({"code": getattr(resp,'code',None), "msg": getattr(resp,'msg',None)})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -79,4 +96,5 @@ def ask():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(port=8080, debug=True)
+    print("Starting frontend shim on http://127.0.0.1:8080")
+    app.run(host="127.0.0.1", port=8080, debug=True)

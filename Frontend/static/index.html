@@ -1,69 +1,423 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <title>Distributed Booking - Demo UI</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Book For My BITS — Distributed Booking Demo</title>
+
+  <!-- Google fonts (works if you have internet) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
   <style>
-    body{font-family:system-ui, -apple-system, sans-serif; padding:20px}
-    #seats { display: grid; grid-template-columns: repeat(5, 90px); gap:10px; margin-top:12px; }
-    .seat{ border:1px solid #ccc; padding:10px; text-align:center; border-radius:6px; }
-    .reserved{ background:#fdd; }
-    button{ margin-top:6px }
+    :root{
+      --bg:#0f1724;
+      --card:#0b1320;
+      --muted:#94a3b8;
+      --accent:#ff3b3f;
+      --accent-2:#ff8c42;
+      --glass: rgba(255,255,255,0.04);
+      --success:#16a34a;
+      --danger:#ef4444;
+      --card-radius:14px;
+      --shadow: 0 6px 18px rgba(2,6,23,0.6);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #071029 0%, #071a2f 55%, #052231 100%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+    }
+
+    header{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+    .logo {
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo svg{ width:60px; height:60px; }
+    .brand-title{
+      line-height:1;
+    }
+    .brand-title h1{
+      margin:0;
+      font-family: "Playfair Display", serif;
+      font-size:20px;
+      letter-spacing:0.2px;
+    }
+    .brand-title p{ margin:0; font-size:12px; color:var(--muted) }
+
+    .topbar{
+      margin-left:auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .token-pill{
+      background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      padding:8px 12px;
+      border-radius:999px;
+      color:var(--muted);
+      font-size:13px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    .main {
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:22px;
+      align-items:start;
+    }
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--card-radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    .left .panel{ position:sticky; top:28px; }
+
+    .muted { color: var(--muted); font-size:13px; }
+
+    /* Seat grid */
+    .seats-wrap { display:flex; flex-direction:column; gap:12px; }
+    .screen {
+      background: linear-gradient(90deg,#ffffff22,#ffffff11);
+      margin:8px 10px;
+      padding:10px;
+      border-radius:10px;
+      text-align:center;
+      color:#cfe7ff;
+      font-size:13px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    .seats {
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:12px;
+    }
+
+    .seat {
+      background:var(--glass);
+      border-radius:10px;
+      padding:10px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      min-height:86px;
+      transition: transform .12s ease, box-shadow .12s ease;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .seat:hover { transform: translateY(-6px); box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+    .seat .id { font-weight:700; font-size:15px; color:#eaf6ff; }
+    .seat .meta { font-size:12px; color:var(--muted); }
+    .seat .actor { font-size:12px; color:#cbdfff; }
+
+    .seat.free .circle {
+      width:40px; height:40px; border-radius:50%;
+      background:linear-gradient(180deg,#0f1724,#0b2540);
+      display:flex; align-items:center; justify-content:center;
+      border:2px solid rgba(255,255,255,0.04);
+      color:#9fe7c4;
+    }
+    .seat.reserved { background: linear-gradient(180deg,#311019,#2a0f1a); border:1px solid rgba(255,255,255,0.04); }
+    .seat.reserved .circle {
+      width:40px; height:40px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(180deg,#ff6b6b,#ff3b3f);
+      color:white;
+    }
+
+    .seat .action {
+      width:100%;
+    }
+    .seat .action button{
+      padding:8px 10px;
+      border-radius:8px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      width:100%;
+    }
+    .seat .action .reserve{
+      background:linear-gradient(90deg,#00b894,#008f68);
+      color:white;
+    }
+    .seat .action .cancel{
+      background:linear-gradient(90deg,#ff7675,#e63946);
+      color:white;
+    }
+
+    .footer-note{ margin-top:14px; font-size:13px; color:var(--muted); }
+
+    /* small screens */
+    @media (max-width:900px){
+      .main{ grid-template-columns: 1fr; }
+      header{ flex-direction:column; align-items:flex-start; gap:12px; }
+    }
+
+    /* toast */
+    .toast {
+      position:fixed; right:20px; bottom:20px; z-index:9999; min-width:220px;
+      background:linear-gradient(90deg,#071428,#062033); color:#e6f7ff; padding:12px 14px; border-radius:10px;
+      border:1px solid rgba(255,255,255,0.04); box-shadow:0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    .small-muted{ font-size:12px; color:var(--muted); }
+
   </style>
 </head>
 <body>
-  <h2>Ticket Booking (Demo)</h2>
-  <div>
-    Username: <input id="username" value="vaibhav"> 
-    Password: <input id="password" value="mysecret" type="password">
-    <button id="btnLogin">Login</button>
-    Token: <span id="tokenSpan"></span>
+  <header>
+    <div class="logo">
+      <!-- Simple SVG logo -->
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#ff8c42"/>
+            <stop offset="1" stop-color="#ff3b3f"/>
+          </linearGradient>
+        </defs>
+        <rect rx="12" width="64" height="64" fill="#041427"/>
+        <g transform="translate(8,8)" fill="url(#g)">
+          <rect x="0" y="0" width="48" height="48" rx="8" opacity="0.16"/>
+          <path d="M6 20 a1 1 0 0 1 10 0 v6 h16 v-6 a1 1 0 0 1 10 0 v12 a4 4 0 0 1 -4 4 H10 a4 4 0 0 1 -4 -4 z" fill="url(#g)"/>
+        </g>
+      </svg>
+      <div class="brand-title">
+        <h1>Book For My BITS</h1>
+        <p>Distributed ticket booking — demo</p>
+      </div>
+    </div>
+
+    <div class="topbar" id="topbar">
+      <div class="small-muted">Leader: <strong>127.0.0.1:60051</strong></div>
+
+      <div style="margin-left:12px; display:flex; gap:10px; align-items:center;">
+        <div class="token-pill" id="tokenSpan">not logged in</div>
+        <button id="btnLogout" class="btn" style="padding:8px 10px; border-radius:10px; background:linear-gradient(90deg,#ff3b3f,#ff8c42);">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="left">
+      <div class="panel">
+        <h3>Account</h3>
+        <div style="margin-top:8px">
+          <div class="muted">Logged in as</div>
+          <div id="usernameShow" style="font-weight:700;margin-top:4px">guest</div>
+        </div>
+
+        <div style="margin-top:12px">
+          <button id="btnRefresh" class="btn" style="width:100%">Refresh Seats</button>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="muted">Quick actions</div>
+          <div style="display:flex; gap:8px; margin-top:8px">
+            <button id="btnDemo" class="input" style="cursor:pointer">Demo Login</button>
+          </div>
+          <div class="footer-note">Tip: connect to the leader (127.0.0.1:60051) for reservations.</div>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="panel">
+        <h4>About</h4>
+        <p class="muted" style="margin-top:8px">
+          This demo shows a distributed ticket booking system with Raft-like replication. Use Refresh → Reserve / Cancel.
+        </p>
+        <p class="small-muted" style="margin-top:10px">Author: Your AOS Project — Demo UI</p>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="panel">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="margin:0">Seats</h3>
+          <div class="muted">Click a seat to reserve or cancel</div>
+        </div>
+
+        <div class="seats-wrap" style="margin-top:12px">
+          <div class="screen">SCREEN</div>
+          <div class="seats" id="seatsContainer">
+            <!-- seat items injected by JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 
-  <div style="margin-top:14px">
-    <button id="btnRefresh">Refresh Seats</button>
-  </div>
-
-  <div id="seats"></div>
+  <div id="toastRoot"></div>
 
 <script>
-let token = "";
-document.getElementById('btnLogin').onclick = async () => {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-  const r = await fetch('/login', {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({username,password})});
-  const j = await r.json();
-  if (j.token) { token=j.token; document.getElementById('tokenSpan').innerText = token; alert('Logged in'); }
-  else alert('Login failed');
-}
+  // ------------------------------
+  // Full index.html script (auth + seat UI + reserve/cancel)
+  // ------------------------------
+  let token = "";           // will be set from localStorage if present
+  let username = "";        // logged-in username
+  const leaderBase = "";    // relative path to Flask API (same origin)
+  const seatsContainer = document.getElementById('seatsContainer');
+  const tokenSpan = document.getElementById('tokenSpan');
+  const btnLogout = document.getElementById('btnLogout');
 
-async function refresh() {
-  const r = await fetch('/get', {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({token})});
-  const j = await r.json();
-  const seatsDiv = document.getElementById('seats');
-  seatsDiv.innerHTML = '';
-  (j.seats || []).forEach(s => {
-    const div = document.createElement('div');
-    div.className = 'seat' + (s.reserved ? ' reserved' : '');
-    div.innerHTML = `<strong>${s.seat_id}</strong><div>${s.reserved ? 'Reserved' : 'Free'}</div><div style="font-size:12px">${s.reserved ? 'by: '+s.reserved_by : ''}</div>`;
-    const btn = document.createElement('button');
-    btn.innerText = s.reserved ? 'Cancel' : 'Reserve';
-    btn.onclick = async () => {
-      if (!token) { alert('Please login'); return; }
-      const url = s.reserved ? '/cancel' : '/reserve';
-      const body = {token, seat_id: s.seat_id, client_id: document.getElementById('username').value};
-      const rr = await fetch(url, {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(body)});
-      const jj = await rr.json();
-      alert(JSON.stringify(jj));
-      await refresh();
-    };
-    div.appendChild(btn);
-    seatsDiv.appendChild(div);
+  function showToast(msg, ok=true){
+    const root = document.getElementById('toastRoot');
+    const el = document.createElement('div');
+    el.className = 'toast';
+    el.style.borderColor = ok ? 'rgba(22,163,74,0.12)' : 'rgba(239,68,68,0.12)';
+    el.innerHTML = '<div style="font-weight:700;margin-bottom:4px">'+(ok? 'Success':'Oops')+'</div><div style="font-size:13px">'+msg+'</div>';
+    root.appendChild(el);
+    setTimeout(()=> el.remove(), 4000);
+  }
+
+  async function api(path, data){
+    try{
+      const r = await fetch(leaderBase + path, {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(data||{})});
+      const j = await r.json();
+      return j;
+    }catch(e){
+      return { error: String(e) };
+    }
+  }
+
+  // Auth helpers
+  function setAuth(tk, user){
+    token = tk || "";
+    username = user || "";
+    if(token){
+      localStorage.setItem('bfmb_token', token);
+      localStorage.setItem('bfmb_user', username);
+      tokenSpan.innerText = username ? `${username} | ${token}` : token;
+      document.getElementById('usernameShow').innerText = username || 'user';
+    }
+  }
+
+  function clearAuth(){
+    token = "";
+    username = "";
+    localStorage.removeItem('bfmb_token');
+    localStorage.removeItem('bfmb_user');
+    tokenSpan.innerText = 'not logged in';
+    document.getElementById('usernameShow').innerText = 'guest';
+  }
+
+  // On load: enforce login
+  (function initAuth(){
+    const tk = localStorage.getItem('bfmb_token');
+    const user = localStorage.getItem('bfmb_user');
+    if(!tk){
+      // not logged in -> go to login page
+      window.location.href = '/login.html';
+      return;
+    }
+    setAuth(tk, user || '');
+  })();
+
+  // Logout handler
+  if(btnLogout){
+    btnLogout.addEventListener('click', () => {
+      clearAuth();
+      // redirect to login page
+      window.location.href = '/login.html';
+    });
+  }
+
+  // Demo login shortcut (useful in local demo)
+  document.getElementById('btnDemo').addEventListener('click', () => {
+    setAuth('tok-demo', 'demo');
+    showToast('Demo login set');
+    refreshSeats();
   });
-}
 
-document.getElementById('btnRefresh').onclick = refresh;
-window.onload = refresh;
+  // Seat UI creation
+  function makeSeatElement(s){
+    const div = document.createElement('div');
+    div.className = 'seat ' + (s.reserved ? 'reserved' : 'free');
+    div.innerHTML = `
+      <div class="circle" aria-hidden="true">${s.reserved ? '&#128737;' : '&#127915;'}</div>
+      <div class="id">${s.seat_id}</div>
+      <div class="meta">${s.reserved ? 'Reserved' : 'Available'}</div>
+      <div class="actor">${s.reserved ? 'by: '+s.reserved_by : ''}</div>
+      <div class="action"></div>
+    `;
+    const action = div.querySelector('.action');
+    const btn = document.createElement('button');
+    if(s.reserved){
+      btn.className = 'cancel';
+      btn.innerText = 'Cancel';
+      btn.onclick = async () => {
+        if(!token){ showToast('Please login', false); return; }
+        const r = await api('/cancel', { token, seat_id: s.seat_id });
+        if(r && (r.code === 0 || (r.msg && r.msg === 'CANCEL_OK'))){
+          showToast('Cancelled '+s.seat_id, true);
+        } else if(r && r.code === 1 && r.msg && r.msg.startsWith("NOT_LEADER:")){
+          showToast('Not leader. Connect to leader and retry.', false);
+        } else {
+          showToast('Cancel failed: ' + (r.msg || r.error || JSON.stringify(r)), false);
+        }
+        await refreshSeats();
+      };
+    } else {
+      btn.className = 'reserve';
+      btn.innerText = 'Reserve';
+      btn.onclick = async () => {
+        if(!token){ showToast('Please login', false); return; }
+        const client_id = username || localStorage.getItem('bfmb_user') || 'web-user';
+        const r = await api('/reserve', { token, seat_id: s.seat_id, client_id });
+        if(r && r.code === 0){
+          showToast('Reserved '+s.seat_id, true);
+        } else if(r && r.code === 1 && r.msg && r.msg.startsWith("NOT_LEADER:")){
+          showToast('Not leader. Connect to leader and retry.', false);
+        } else {
+          showToast('Reserve failed: ' + (r.msg || r.error || JSON.stringify(r)), false);
+        }
+        await refreshSeats();
+      };
+    }
+    action.appendChild(btn);
+    return div;
+  }
+
+  // Refresh seats from backend
+  async function refreshSeats(){
+    seatsContainer.innerHTML = '';
+    const resp = await api('/get', { token });
+    if(resp && resp.seats){
+      resp.seats.forEach(s => {
+        seatsContainer.appendChild(makeSeatElement(s));
+      });
+    } else {
+      seatsContainer.innerHTML = '<div class="muted">Could not load seats. Is backend running?</div>';
+      if(resp && resp.error) console.log('get error', resp.error);
+    }
+  }
+
+  // Wire refresh button
+  document.getElementById('btnRefresh').addEventListener('click', refreshSeats);
+
+  // Start: call refreshSeats once (if auth passed)
+  // Delay slightly so UI shows token first
+  setTimeout(() => {
+    if(token) refreshSeats();
+  }, 150);
+
 </script>
 </body>
 </html>
