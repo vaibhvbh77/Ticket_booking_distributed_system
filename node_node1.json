@@ -2,249 +2,21 @@
   "log": [
     {
       "index": 1,
-      "term": 10,
+      "term": 64,
       "command": "reserve",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
+      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
     },
     {
       "index": 2,
-      "term": 10,
+      "term": 64,
       "command": "reserve",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
+      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
     },
     {
       "index": 3,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 4,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S4\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 5,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S5\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 6,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S10\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 7,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S9\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 8,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S8\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 9,
-      "term": 10,
+      "term": 64,
       "command": "cancel",
       "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 10,
-      "term": 10,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S4\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 11,
-      "term": 45,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 12,
-      "term": 45,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 13,
-      "term": 45,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S4\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 14,
-      "term": 45,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S8\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 15,
-      "term": 45,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S9\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 16,
-      "term": 45,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S5\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 17,
-      "term": 76,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S5\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 18,
-      "term": 76,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 19,
-      "term": 76,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 20,
-      "term": 76,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 21,
-      "term": 76,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 22,
-      "term": 76,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 23,
-      "term": 76,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 24,
-      "term": 76,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S4\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 25,
-      "term": 76,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S5\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 26,
-      "term": 76,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S9\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 27,
-      "term": 76,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S9\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 28,
-      "term": 76,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S8\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 29,
-      "term": 76,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S8\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 30,
-      "term": 76,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 31,
-      "term": 76,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 32,
-      "term": 76,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 33,
-      "term": 170,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 34,
-      "term": 178,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 35,
-      "term": 181,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 36,
-      "term": 181,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 37,
-      "term": 181,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 38,
-      "term": 181,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 39,
-      "term": 181,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 40,
-      "term": 181,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 41,
-      "term": 181,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
     }
   ],
   "seats": {
@@ -253,8 +25,8 @@
       "by": ""
     },
     "S2": {
-      "reserved": false,
-      "by": ""
+      "reserved": true,
+      "by": "vaibhav"
     },
     "S3": {
       "reserved": false,
@@ -285,86 +57,26 @@
       "by": ""
     },
     "S10": {
-      "reserved": true,
-      "by": "test"
+      "reserved": false,
+      "by": ""
     }
   },
   "sessions": {
-    "tok-vaibhav-1760953612": {
+    "tok-vaibhav-1761431856": {
       "username": "vaibhav",
-      "expiry": 1760957212.6772301
+      "expiry": 1761435456.024789
     },
-    "tok-test-1760953623": {
-      "username": "test",
-      "expiry": 1760957223.8708658
-    },
-    "tok-vaibhav-1761061146": {
+    "tok-vaibhav-1761431866": {
       "username": "vaibhav",
-      "expiry": 1761064746.387243
-    },
-    "tok-test-1761061262": {
-      "username": "test",
-      "expiry": 1761064862.1425018
-    },
-    "tok-vaibhav-1761071116": {
-      "username": "vaibhav",
-      "expiry": 1761074716.659633
-    },
-    "tok-vaibhav-1761071160": {
-      "username": "vaibhav",
-      "expiry": 1761074760.575226
-    },
-    "tok-vaibhav-1761071571": {
-      "username": "vaibhav",
-      "expiry": 1761075171.5545988
-    },
-    "tok-vaibhav-1761071624": {
-      "username": "vaibhav",
-      "expiry": 1761075224.0466702
-    },
-    "tok-vaibhav-1761072032": {
-      "username": "vaibhav",
-      "expiry": 1761075632.633684
-    },
-    "tok-vaibhav-1761379549": {
-      "username": "vaibhav",
-      "expiry": 1761383149.1993961
-    },
-    "tok-vaibhav-1761379596": {
-      "username": "vaibhav",
-      "expiry": 1761383196.5155041
-    },
-    "tok-vaibhav-1761379618": {
-      "username": "vaibhav",
-      "expiry": 1761383218.744284
-    },
-    "tok-vaibhav-1761421024": {
-      "username": "vaibhav",
-      "expiry": 1761424624.9724731
-    },
-    "tok-vaibhav-1761421079": {
-      "username": "vaibhav",
-      "expiry": 1761424679.3370821
-    },
-    "tok-vaibhav-1761421227": {
-      "username": "vaibhav",
-      "expiry": 1761424827.557725
-    },
-    "tok-vaibhav-1761421451": {
-      "username": "vaibhav",
-      "expiry": 1761425051.726413
-    },
-    "tok-vaibhav-1761421897": {
-      "username": "vaibhav",
-      "expiry": 1761425497.002547
+      "expiry": 1761435466.101015
     }
   },
   "users": {
     "vaibhav": {
-      "salt": "c242cd7cf5082db4",
-      "pw_hash": "c4286f0400ee4f23ba65f439c51d7f3e9e9577954a4a714e03faaf8c914b86c1"
+      "salt": "67b8fa3913c00119",
+      "pw_hash": "0e68eb25fb641a84d11f16825c9777390803686e8bd8ae04991c0ba5d241d357"
     }
   },
-  "currentTerm": 196,
+  "currentTerm": 64,
   "votedFor": "node1"
 }

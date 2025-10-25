@@ -2,69 +2,27 @@
   "log": [
     {
       "index": 1,
-      "term": 10,
+      "term": 64,
+      "command": "reserve",
+      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
+    },
+    {
+      "index": 2,
+      "term": 64,
       "command": "reserve",
       "data": "{\"seat_id\": \"S2\", \"client_id\": \"vaibhav\"}"
     },
     {
-      "index": 2,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S1\", \"client_id\": \"vaibhav\"}"
-    },
-    {
       "index": 3,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 4,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S4\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 5,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S5\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 6,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S10\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 7,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S9\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 8,
-      "term": 10,
-      "command": "reserve",
-      "data": "{\"seat_id\": \"S8\", \"client_id\": \"test\"}"
-    },
-    {
-      "index": 9,
-      "term": 10,
+      "term": 64,
       "command": "cancel",
       "data": "{\"seat_id\": \"S3\", \"client_id\": \"vaibhav\"}"
-    },
-    {
-      "index": 10,
-      "term": 10,
-      "command": "cancel",
-      "data": "{\"seat_id\": \"S4\", \"client_id\": \"vaibhav\"}"
     }
   ],
   "seats": {
     "S1": {
-      "reserved": true,
-      "by": "vaibhav"
+      "reserved": false,
+      "by": ""
     },
     "S2": {
       "reserved": true,
@@ -79,8 +37,8 @@
       "by": ""
     },
     "S5": {
-      "reserved": true,
-      "by": "test"
+      "reserved": false,
+      "by": ""
     },
     "S6": {
       "reserved": false,
@@ -91,25 +49,25 @@
       "by": ""
     },
     "S8": {
-      "reserved": true,
-      "by": "test"
+      "reserved": false,
+      "by": ""
     },
     "S9": {
-      "reserved": true,
-      "by": "test"
+      "reserved": false,
+      "by": ""
     },
     "S10": {
-      "reserved": true,
-      "by": "test"
+      "reserved": false,
+      "by": ""
     }
   },
   "sessions": {},
   "users": {
     "vaibhav": {
-      "salt": "5a05be6e5f4d7d7d",
-      "pw_hash": "bb620baa5c8e68117539e8c81f6238637aae30a4b5d7dc5829dfb7c527fbcabd"
+      "salt": "5dd5c98d0a7b0f23",
+      "pw_hash": "c455b6c49ced2a2d6ed2e8a888ce81d8fdc0c8a706f7eff82177075afaefa0ea"
     }
   },
-  "currentTerm": 11,
-  "votedFor": "node3"
+  "currentTerm": 64,
+  "votedFor": null
 }
