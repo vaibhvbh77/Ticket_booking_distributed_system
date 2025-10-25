@@ -104,7 +104,12 @@
     }
   },
   "sessions": {},
-  "users": {},
+  "users": {
+    "vaibhav": {
+      "salt": "5a05be6e5f4d7d7d",
+      "pw_hash": "bb620baa5c8e68117539e8c81f6238637aae30a4b5d7dc5829dfb7c527fbcabd"
+    }
+  },
   "currentTerm": 11,
   "votedFor": "node3"
 }
